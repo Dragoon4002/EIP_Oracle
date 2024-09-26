@@ -1,5 +1,5 @@
 // src/app/agents/page.tsx
-"use client";  // Client Component
+"use client";  // Ensures it's a Client Component
 
 import { useState } from 'react';
 import Head from 'next/head';
