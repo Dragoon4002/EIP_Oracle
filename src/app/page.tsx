@@ -1,101 +1,128 @@
-import Image from "next/image";
+// app/page.tsx
+"use client";  // Add this to make the component a Client Component
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
+// import { Carousel } from 'react-responsive-carousel';
+// import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+interface EIP {
+  id: number;
+  title: string;
+  description: string;
+  url: string;
+}
+
+interface Update {
+  title: string;
+  date: string;
+  url: string;
+}
+
+interface Card {
+  profile: string;
+  subheading: string;
+  text: string;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [recentEIP, setRecentEIP] = useState<EIP | null>(null);
+  const [suggestedFeatures, setSuggestedFeatures] = useState<string[]>([]);
+  const [ecosystemUpdates, setEcosystemUpdates] = useState<Update[]>([]);
+  const [cards, setCards] = useState<Card[]>([
+    {
+      profile: 'https://via.placeholder.com/50',
+      subheading: 'Increase transaction throughput for L2s',
+      text: 'This change will allow for faster transactions on Layer 2 solutions.',
+    },
+    {
+      profile: 'https://via.placeholder.com/50',
+      subheading: 'Improve EVM compatibility for ZK-rollups',
+      text: 'This update will enable better compatibility with ZK-rollups.',
+    },
+    {
+      profile: 'https://via.placeholder.com/50',
+      subheading: 'Cross-chain interoperability improvements',
+      text: 'This change will improve communication between different blockchain networks.',
+    },
+  ]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const fetchRecentEIP = async () => {
+      try {
+        const response = await axios.get(
+          'https://raw.githubusercontent.com/ethereum/EIPs/master/EIPS/eip-1.md'
+        );
+        setRecentEIP({
+          id: 1,
+          title: 'EIP 1: Ethereum Improvement Proposal',
+          description: 'This is the latest EIP recently launched.',
+          url: '/eip/1',
+        });
+      } catch (error) {
+        console.error('Error fetching recent EIP', error);
+      }
+    };
+
+    fetchRecentEIP();
+  }, []);
+
+  useEffect(() => {
+    const features = [
+      'Increase transaction throughput for L2s',
+      'Improve EVM compatibility for ZK-rollups',
+      'Cross-chain interoperability improvements',
+    ];
+    setSuggestedFeatures(features);
+  }, []);
+
+  useEffect(() => {
+    const updates = [
+      {
+        title: 'Ethereum Mainnet Merge completed successfully',
+        date: '2024-09-10',
+        url: 'https://ethereum.org/en/merge/',
+      },
+      {
+        title: 'EIP-4844 brings proto-danksharding to reduce gas fees',
+        date: '2024-08-20',
+        url: 'https://eips.ethereum.org/EIPS/eip-4844',
+      },
+    ];
+    setEcosystemUpdates(updates);
+  }, []);
+
+  return (
+    <div>
+      <div className="hero" style={{ height: '60vh' }}>
+        <div>
+          <div>
+            <h2>Slide 1</h2>
+            <p>This is the first slide.</p>
+          </div>
+          <div>
+            <h2>Slide 2</h2>
+            <p>This is the second slide.</p>
+          </div>
+          <div>
+            <h2>Slide 3</h2>
+            <p>This is the third slide.</p>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      <div className="changes-section">
+        <h2>Changes to be made in next EIP</h2>
+        <div className="cards">
+          {cards.map((card, index) => (
+            <div key={index} className="card">
+              <img src={card.profile} alt="Profile" />
+              <h3>{card.subheading}</h3>
+              <p>{card.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
