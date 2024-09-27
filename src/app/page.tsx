@@ -26,6 +26,12 @@ interface Card {
   text: string;
 }
 
+interface Sliders{
+  name : string;
+  link : string;
+  html : string;
+}
+
 export default function Home() {
   const [recentEIP, setRecentEIP] = useState<EIP | null>(null);
   const [suggestedFeatures, setSuggestedFeatures] = useState<string[]>([]);
@@ -47,6 +53,13 @@ export default function Home() {
       text: 'This change will improve communication between different blockchain networks.',
     },
   ]);
+  const [sliders, setSlides] = useState<Sliders[]>([
+    {
+      name: 'EIP-1',
+      link: 'https://api.github.com/repos/ethereum/EIPs/contents/EIPS/eip-1.md?ref=master',
+      html: 'https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1.md',
+    },
+  ])
 
   useEffect(() => {
     const fetchRecentEIP = async () => {
@@ -95,22 +108,19 @@ export default function Home() {
 
   return (
     <div>
-      <div className="hero" style={{ height: '60vh' }}>
-        <div>
-          <div>
-            <h2>Slide 1</h2>
-            <p>This is the first slide.</p>
-          </div>
-          <div>
-            <h2>Slide 2</h2>
-            <p>This is the second slide.</p>
-          </div>
-          <div>
-            <h2>Slide 3</h2>
-            <p>This is the third slide.</p>
-          </div>
+      <div className="hero h-99 bg-[url('/images/dark-ethereum-background.webp')] bg-cover bg-center grid place-items-center" >
+        <div className="text-white p-6 w-auto text-center text-4xl m-10 font-black">
+          <h1>WELCOME TO EIP ORACLE</h1>
+          <sub>A Easy way to deal with the EIP changes occuring in Ethereum chain and helps to get how it helps/ affects your field of work</sub>
         </div>
       </div>
+      <div className="w-full h-1 bg-blue-950 animate-breathe"></div>
+      {sliders.map((slide,index) =>(
+          <a key={index} className="slides bg-white/[.06] backdrop-blur  p-6 w-1/3" href={slide.link}>
+            <h2>{slide.name}</h2>
+            <p><a href={slide.html}>The link to this EIP html</a></p>
+          </a>
+        ))}
       <div className="changes-section">
         <h2>Changes to be made in next EIP</h2>
         <div className="cards">

@@ -35,22 +35,26 @@ const AgentPage = () => {
         <title>Agent Page</title>
       </Head>
 
-      <section className="bg-gray-800 text-white p-6 rounded-lg mb-8">
+      <section className="bg-gray-800 text-white p-10 mb-8">
+        <p className='text-3xl'>Get Detailed <b>Insights on a specific EIP regarding your Domain</b> using our Agents</p>
         <div className="mt-4">
+          <p className='text-lg'>Choose the EIP you wish to get details on:</p>
           <input
             type="text"
-            placeholder="Enter EIP ID"
+            placeholder="Enter EIP ID [Example: 'eip-1']"
             value={eipId}
             onChange={(e) => setEipId(e.target.value)}
-            className="p-2 rounded border border-gray-300"
+            className="p-2 rounded border border-gray-300 w-3/5"
           />
         </div>
 
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex flex-col w-3/5">
+        <p className='text-lg'>Choose your domain agent to get detailed insights on them:</p>
+        <div className='flex'>
           {['Technical', 'Community', 'Research', 'Other'].map(agentType => (
             <button
               key={agentType}
-              className={`mr-2 p-2 rounded ${
+              className={`mr-2 p-2 w-2/5 rounded ${
                 selectedAgent === agentType ? 'bg-blue-500' : 'bg-gray-500'
               } text-white`}
               onClick={() => setSelectedAgent(agentType)}
@@ -58,6 +62,7 @@ const AgentPage = () => {
               {agentType} Agent
             </button>
           ))}
+        </div>
         </div>
 
         <div className="mt-4">
